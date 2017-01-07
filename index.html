@@ -300,7 +300,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-07T15:33:35+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-07T23:28:33+08:00">
                 2017-01-07
               </time>
             
@@ -338,7 +338,8 @@
       
         
           
-            <h1 id="Multi-GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型"><a href="#Multi-GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型" class="headerlink" title="Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型"></a>Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型</h1><h3 id="Boosted-tree来做点击率预估的公式推导"><a href="#Boosted-tree来做点击率预估的公式推导" class="headerlink" title="Boosted tree来做点击率预估的公式推导"></a>Boosted tree来做点击率预估的公式推导</h3><p>&emsp;&emsp;&emsp;首先来定义树模型，假设第i行输入特征为$x_i$，第$k$颗树为$f_k$，那树模型的输出就可以写成:</p>
+            <p>=========================<br>title: Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型</p>
+<h1 id="categories-机器学习"><a href="#categories-机器学习" class="headerlink" title="categories: 机器学习"></a>categories: 机器学习</h1><h1 id="Multi-GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型"><a href="#Multi-GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型" class="headerlink" title="Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型"></a>Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型</h1><h3 id="Boosted-tree来做点击率预估的公式推导"><a href="#Boosted-tree来做点击率预估的公式推导" class="headerlink" title="Boosted tree来做点击率预估的公式推导"></a>Boosted tree来做点击率预估的公式推导</h3><p>&emsp;&emsp;&emsp;首先来定义树模型，假设第i行输入特征为$x_i$，第$k$颗树为$f_k$，那树模型的输出就可以写成:</p>
 <center>$\hat{y}_i=\sum_{k=1}^{K}f_{k}(x_{i})$</center><br>&emsp;&emsp;&emsp;目标损失函数就可以写成如下形式，一个误差函数，加上一个正则化项：<br><center>$Obj(\Theta)=\sum_i^nl(y_i,\hat{y}_i)+\sum_{k=1}^K\Omega(f_k)$</center>
 
 <p>&emsp;&emsp;&emsp;那如何来训练树模型来最小化这个目标函数呢？XGBoost使用方法为additive training，核心思路就是，每次加入一颗树，使得目标函数最小。于是我们的目标函数可以改写成：  </p>
