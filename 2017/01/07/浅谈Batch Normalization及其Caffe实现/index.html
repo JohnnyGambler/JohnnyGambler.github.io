@@ -5,12 +5,28 @@
   
   <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="浅谈Batch Normalization及其Caffe实现标签（空格分隔）： 未分类
+
+摘要:2015年2月份，Google和MSRA的paper相继在arxiv.org上横空出世，宣布在ImagenNet图像数据集上取得了比人类更高的识别能力. 此突破意义重大，文章发布后引起一片热潮，在图像领域具有普适的应用.本文中笔者仅就Google的Batch Normalization谈谈粗浅的理解.">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://yoursite.com/2017/01/07/浅谈Batch Normalization及其Caffe实现/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="浅谈Batch Normalization及其Caffe实现标签（空格分隔）： 未分类
+
+摘要:2015年2月份，Google和MSRA的paper相继在arxiv.org上横空出世，宣布在ImagenNet图像数据集上取得了比人类更高的识别能力. 此突破意义重大，文章发布后引起一片热潮，在图像领域具有普适的应用.本文中笔者仅就Google的Batch Normalization谈谈粗浅的理解.">
+<meta property="og:image" content="http://static.zybuluo.com/ivertime/avy469fn32mzi4zkek5yayj4/5A75AEEF-2336-44A1-B7B2-8A9EC5155397.jpg">
+<meta property="og:image" content="http://static.zybuluo.com/ivertime/2a1559dvepalq805da0kv6ez/image_1b2foqvk2s3dnliura7cp1bthm.png">
+<meta property="og:image" content="http://static.zybuluo.com/ivertime/k60gmyaaetjzrrgdq2e1dvdl/linear">
+<meta property="og:image" content="http://static.zybuluo.com/ivertime/ie8ddkhxb5436k4pqf8keuqh/1-gkXI7LYwyGPLU5dn6Jb6Bg.png">
+<meta property="og:image" content="http://static.zybuluo.com/ivertime/laq0fr1br97q07qry0k2q2lo/image_1b2fpiu34ep7iljocuejh7b813.png">
+<meta property="og:updated_time" content="2017-01-07T06:26:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="浅谈Batch Normalization及其Caffe实现标签（空格分隔）： 未分类
+
+摘要:2015年2月份，Google和MSRA的paper相继在arxiv.org上横空出世，宣布在ImagenNet图像数据集上取得了比人类更高的识别能力. 此突破意义重大，文章发布后引起一片热潮，在图像领域具有普适的应用.本文中笔者仅就Google的Batch Normalization谈谈粗浅的理解.">
+<meta name="twitter:image" content="http://static.zybuluo.com/ivertime/avy469fn32mzi4zkek5yayj4/5A75AEEF-2336-44A1-B7B2-8A9EC5155397.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -59,9 +75,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-浅谈Batch Normalization及其Caffe实现" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-浅谈Batch Normalization及其Caffe实现" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/01/07/浅谈Batch Normalization及其Caffe实现/" class="article-date">
   <time datetime="2017-01-07T06:26:41.000Z" itemprop="datePublished">2017-01-07</time>
@@ -135,45 +149,19 @@ layer {
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-xgboost实战" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/01/07/xgboost实战/" class="article-date">
-  <time datetime="2017-01-07T06:18:46.000Z" itemprop="datePublished">2017-01-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>###Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型</p>
-<p>###Boosted tree来做点击率预估的公式推导<br>&emsp;&emsp;&emsp;首先来定义树模型，假设第i行输入特征为$$x_{i}$$，第$$k$$颗树为$$f_k$$，那树模型的输出就可以写成：</p>
-<p>#####$$\hat{y}<em>{i}=\sum</em>{k=1}^Kf<em>{k}(x</em>{i})$$<br>&emsp;&emsp;&emsp;目标损失函数就可以写成如下形式，一个误差函数，加上一个正则化项：<br>$$Obj(\Theta)=\sum_i^nl(y_i,\hat{y}<em>i)+\sum</em>{k=1}^K\Omega(f_k)$$  </p>
-<p>&emsp;&emsp;&emsp;那如何来训练树模型来最小化这个目标函数呢？XGBoost使用方法为additive training，核心思路就是，每次加入一颗树，使得目标函数最小。于是我们的目标函数可以改写成：  </p>
-<center>$$Obj^t=\sum_i^nl(y_i,\hat{y}<em>i^t)+\sum</em>{i=1}^t\Omega(f_i)=\sum_i^nl(y_i,\hat{y}_i^{(t-1)}+f_t(x_i))+\Omega(f<em>t)+cons$$</em></center><br> &emsp;&emsp;&emsp;将这个式子再通过泰勒展开得到：<br><center>$$Obj^t\simeq\sum{i=1}^n[g_if_t(x_i)+\frac{1}{2}h_if_t^2(x_i)]+\Omega(f_t)$$</center><br> &emsp;&emsp;&emsp;其中$$g<em>i=\partial</em>{\hat{y_i}^{(t-1)}}l(y_i,\hat{y}_i^{(t-1)}),h<em>i=\partial</em>{\hat{y_i}^{(t-1)}}^2l(y_i,\hat{y}_i^{(t-1)})$$。$$g_i$$就是指目标值和估计值之间的误差在$$\hat{y_i}^{(t-1)}$$这个点的一阶导数，$$h_i$$就是二阶导数。<br><br>&emsp;&emsp;&emsp;接下来，对树模型的定义做下细化，将树拆分成结构部分$$q$$和叶子的权重部分$$w$$。即$$q$$就是树节点的那些规则，$$w$$就是特征通过树规则后得到的叶子节点权值。<br><center>$$f_t(x)=w_q(x)$$</center><br>&emsp;&emsp;&emsp;目标函数的正则化项可以写成：<br><center>$$\Omega(f<em>t)=\gamma T+\frac{1}{2}\lambda\sum</em>{j=1}^Tw_j^2$$  </center><br>&emsp;&emsp;&emsp;&emsp;定义$$I_j={i|q(x_i)=j}$$,$$I_j$$为所有通过树的规则，进入叶子$$j$$的集合。<br>&emsp;&emsp;&emsp;&emsp;再定义$$G<em>j=\sum</em>{i\in I_j}g_i   , H<em>j=\sum</em>{i\in I_j}h<em>i$$。我们改写目标函数为：<br><center>$$Obj^t\simeq\sum</center></em>{i=1}^n[g_if_t(x_i)+\frac{1}{2}h_if_t^2(x_i)]+\Omega(f<em>t)$$<br><center>$$=\sum</center></em>{i=1}^n[g_if_t(x_i)+\frac{1}{2}h_if_t^2(x<em>i)]+\gamma T+\frac{1}{2}\lambda\sum</em>{j=1}^Tw_j^2$$  
+  
+    <a href="/2017/01/07/xgboost实战/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
 
-<p><center>$$=\sum<em>{j=1}^T[(\sum</em>{i\in I_j}g_i)w<em>j+\frac{1}{2}(\sum</em>{i\in I_j}h_i+\lambda)w_j^2]+\gamma T$$</center>   </p>
-<p><center>$$=\sum_{j=1}^T[G_jw_j+\frac{1}{2}(H_i+\lambda)w<em>j^2]+\gamma T$$</em></center><br>目标函数一步步推导到这个形式，就会发现，最小化目标函数，其实就是一个二次函数求导的问题。最小化的目标函数值为：<br>$$Obj=-\frac{1}{2}\sum{j=1}^T\frac{G_j^2}{H_j^2+\lambda}+\gamma T$$，其中$$w_j=-\frac{G_j}{H_j+\lambda}$$<br>&emsp;&emsp;&emsp;&emsp;所以，我们每次加入一颗树，就是要想办法将这个目标函数最小化。怎们分裂这个部分我想放到下一篇里面，来讲下如何用GBDT来做特征选择。</p>
-<p>###XGBoost并行训练数千个GBDT模型<br>XGBoost的源码：。<br>xgboost在yarn平台的运行命令是：<br><img src="https://github.com/JohnnyGambler/MarkdownPhoto/blob/master/1.PNG" alt=""></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/01/07/xgboost实战/" data-id="cixmulfcx00017gn15iqrf2ci" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-  
 
 </section>
         
