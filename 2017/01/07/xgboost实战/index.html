@@ -5,20 +5,20 @@
   
   <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型Boosted tree来做点击率预估的公式推导&amp;emsp;&amp;emsp;&amp;emsp;首先来定义树模型，假设第i行输入特征为$x{i}$，第$k$颗树为$f{k}$，那树模型的输出就可以写成:
-$\hat{y}{i}=\sum{k=1}^{K}f{k}(x{i})$&amp;emsp;&amp;emsp;&amp;emsp;目标损失函数就可以">
+  <meta name="description" content="Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型Boosted tree来做点击率预估的公式推导&amp;emsp;&amp;emsp;&amp;emsp;首先来定义树模型，假设第i行输入特征为$x_i$，第$k$颗树为$f_k$，那树模型的输出就可以写成:
+$\hat{y}_i=\sum_{k=1}^{K}f_{k}(x_{i})$&amp;emsp;&amp;emsp;&amp;emsp;目标损失函数就可以">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
 <meta property="og:url" content="http://yoursite.com/2017/01/07/xgboost实战/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型Boosted tree来做点击率预估的公式推导&amp;emsp;&amp;emsp;&amp;emsp;首先来定义树模型，假设第i行输入特征为$x{i}$，第$k$颗树为$f{k}$，那树模型的输出就可以写成:
-$\hat{y}{i}=\sum{k=1}^{K}f{k}(x{i})$&amp;emsp;&amp;emsp;&amp;emsp;目标损失函数就可以">
+<meta property="og:description" content="Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型Boosted tree来做点击率预估的公式推导&amp;emsp;&amp;emsp;&amp;emsp;首先来定义树模型，假设第i行输入特征为$x_i$，第$k$颗树为$f_k$，那树模型的输出就可以写成:
+$\hat{y}_i=\sum_{k=1}^{K}f_{k}(x_{i})$&amp;emsp;&amp;emsp;&amp;emsp;目标损失函数就可以">
 <meta property="og:image" content="https://github.com/JohnnyGambler/MarkdownPhoto/blob/master/1.PNG">
-<meta property="og:updated_time" content="2017-01-07T07:18:22.000Z">
+<meta property="og:updated_time" content="2017-01-07T07:26:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型Boosted tree来做点击率预估的公式推导&amp;emsp;&amp;emsp;&amp;emsp;首先来定义树模型，假设第i行输入特征为$x{i}$，第$k$颗树为$f{k}$，那树模型的输出就可以写成:
-$\hat{y}{i}=\sum{k=1}^{K}f{k}(x{i})$&amp;emsp;&amp;emsp;&amp;emsp;目标损失函数就可以">
+<meta name="twitter:description" content="Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型Boosted tree来做点击率预估的公式推导&amp;emsp;&amp;emsp;&amp;emsp;首先来定义树模型，假设第i行输入特征为$x_i$，第$k$颗树为$f_k$，那树模型的输出就可以写成:
+$\hat{y}_i=\sum_{k=1}^{K}f_{k}(x_{i})$&amp;emsp;&amp;emsp;&amp;emsp;目标损失函数就可以">
 <meta name="twitter:image" content="https://github.com/JohnnyGambler/MarkdownPhoto/blob/master/1.PNG">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -57,9 +57,9 @@ $\hat{y}{i}=\sum{k=1}^{K}f{k}(x{i})$&amp;emsp;&amp;emsp;&amp;emsp;目标损失�
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -71,7 +71,7 @@ $\hat{y}{i}=\sum{k=1}^{K}f{k}(x{i})$&amp;emsp;&amp;emsp;&amp;emsp;目标损失�
         <section id="main"><article id="post-xgboost实战" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/01/07/xgboost实战/" class="article-date">
-  <time datetime="2017-01-07T07:18:22.000Z" itemprop="datePublished">2017-01-07</time>
+  <time datetime="2017-01-07T07:26:41.000Z" itemprop="datePublished">2017-01-07</time>
 </a>
     
   </div>
@@ -80,8 +80,8 @@ $\hat{y}{i}=\sum{k=1}^{K}f{k}(x{i})$&amp;emsp;&amp;emsp;&amp;emsp;目标损失�
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Multi-GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型"><a href="#Multi-GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型" class="headerlink" title="Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型"></a>Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型</h1><h3 id="Boosted-tree来做点击率预估的公式推导"><a href="#Boosted-tree来做点击率预估的公式推导" class="headerlink" title="Boosted tree来做点击率预估的公式推导"></a>Boosted tree来做点击率预估的公式推导</h3><p>&emsp;&emsp;&emsp;首先来定义树模型，假设第i行输入特征为$x<em>{i}$，第$k$颗树为$f</em>{k}$，那树模型的输出就可以写成:</p>
-<center>$\hat{y}<em>{i}=\sum</em>{k=1}^{K}f<em>{k}(x</em>{i})$</center><br>&emsp;&emsp;&emsp;目标损失函数就可以写成如下形式，一个误差函数，加上一个正则化项：<br><center>$Obj(\Theta)=\sum_i^nl(y_i,\hat{y}<em>i)+\sum</em>{k=1}^K\Omega(f_k)$</center>
+        <h1 id="Multi-GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型"><a href="#Multi-GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型" class="headerlink" title="Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型"></a>Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型</h1><h3 id="Boosted-tree来做点击率预估的公式推导"><a href="#Boosted-tree来做点击率预估的公式推导" class="headerlink" title="Boosted tree来做点击率预估的公式推导"></a>Boosted tree来做点击率预估的公式推导</h3><p>&emsp;&emsp;&emsp;首先来定义树模型，假设第i行输入特征为$x_i$，第$k$颗树为$f_k$，那树模型的输出就可以写成:</p>
+<center>$\hat{y}_i=\sum_{k=1}^{K}f_{k}(x_{i})$</center><br>&emsp;&emsp;&emsp;目标损失函数就可以写成如下形式，一个误差函数，加上一个正则化项：<br><center>$Obj(\Theta)=\sum_i^nl(y_i,\hat{y}<em>i)+\sum</em>{k=1}^K\Omega(f_k)$</center>
 
 <p>&emsp;&emsp;&emsp;那如何来训练树模型来最小化这个目标函数呢？XGBoost使用方法为additive training，核心思路就是，每次加入一颗树，使得目标函数最小。于是我们的目标函数可以改写成：  </p>
 <center>$Obj^t=\sum_i^nl(y_i,\hat{y}<em>i^t)+\sum</em>{i=1}^t\Omega(f_i)=\sum_i^nl(y_i,\hat{y}_i^{(t-1)}+f_t(x_i))+\Omega(f<em>t)+cons$</em></center><br> &emsp;&emsp;&emsp;将这个式子再通过泰勒展开得到：<br><center>$Obj^t\simeq\sum{i=1}^n[g_if_t(x_i)+\frac{1}{2}h_if_t^2(x_i)]+\Omega(f_t)$</center><br> &emsp;&emsp;&emsp;其中$g<em>i=\partial</em>{\hat{y_i}^{(t-1)}}l(y_i,\hat{y}_i^{(t-1)}),h<em>i=\partial</em>{\hat{y_i}^{(t-1)}}^2l(y_i,\hat{y}_i^{(t-1)})$。$g_i$就是指目标值和估计值之间的误差在$\hat{y_i}^{(t-1)}$这个点的一阶导数，$h_i$就是二阶导数。<br><br>&emsp;&emsp;&emsp;接下来，对树模型的定义做下细化，将树拆分成结构部分$q$和叶子的权重部分$w$。即$q$就是树节点的那些规则，$w$就是特征通过树规则后得到的叶子节点权值。<br><center>$f_t(x)=w_q(x)$</center><br>&emsp;&emsp;&emsp;目标函数的正则化项可以写成：<br><center>$\Omega(f<em>t)=\gamma T+\frac{1}{2}\lambda\sum</em>{j=1}^Tw_j^2$  </center><br>&emsp;&emsp;&emsp;&emsp;定义$I_j={i|q(x_i)=j}$,$I_j$为所有通过树的规则，进入叶子$j$的集合。<br>&emsp;&emsp;&emsp;&emsp;再定义$G<em>j=\sum</em>{i\in I_j}g_i   , H<em>j=\sum</em>{i\in I_j}h<em>i$。我们改写目标函数为：<br><center>$Obj^t\simeq\sum</center></em>{i=1}^n[g_if_t(x_i)+\frac{1}{2}h_if_t^2(x_i)]+\Omega(f<em>t)$<br><center>$=\sum</center></em>{i=1}^n[g_if_t(x_i)+\frac{1}{2}h_if_t^2(x<em>i)]+\gamma T+\frac{1}{2}\lambda\sum</em>{j=1}^Tw_j^2$  
@@ -93,7 +93,7 @@ $\hat{y}{i}=\sum{k=1}^{K}f{k}(x{i})$&amp;emsp;&amp;emsp;&amp;emsp;目标损失�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/01/07/xgboost实战/" data-id="cixmwfu7g0001cxn13qnvxdpc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/01/07/xgboost实战/" data-id="cixmwqj7v0001dnn1ifzernjz" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -104,7 +104,7 @@ $\hat{y}{i}=\sum{k=1}^{K}f{k}(x{i})$&amp;emsp;&amp;emsp;&amp;emsp;目标损失�
   
   
     <a href="/2017/01/07/test/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
+      <strong class="article-nav-caption">Ancien</strong>
       <div class="article-nav-title"></div>
     </a>
   
@@ -137,7 +137,7 @@ $\hat{y}{i}=\sum{k=1}^{K}f{k}(x{i})$&amp;emsp;&amp;emsp;&amp;emsp;目标损失�
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
@@ -166,7 +166,7 @@ $\hat{y}{i}=\sum{k=1}^{K}f{k}(x{i})$&amp;emsp;&amp;emsp;&amp;emsp;目标损失�
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 John Doe<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
