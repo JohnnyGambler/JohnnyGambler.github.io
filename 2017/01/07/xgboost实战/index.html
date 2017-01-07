@@ -5,20 +5,20 @@
   
   <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型Boosted tree来做点击率预估的公式推导&amp;emsp;&amp;emsp;&amp;emsp;首先来定义树模型，假设第i行输入特征为$x_{i}$，第$k$颗树为$f_k$，那树模型的输出就可以写成：
-$\hat{y}{i}=\sum{k=1}^Kf{k}(x{i})$&amp;emsp;&amp;emsp;&amp;emsp;目标损失函数就可以写成">
+  <meta name="description" content="Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型Boosted tree来做点击率预估的公式推导  ReLu$f(x) = \text{max}(Wx + b)$&amp;emsp;&amp;emsp;&amp;emsp;首先来定义树模型，假设第i行输入特征为$x_{i}$，第$k$颗树为$fk$，那树模型的输出就可以写成：$\sigma^2{\beta}$
+$\hat{y}{i}=\s">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
 <meta property="og:url" content="http://yoursite.com/2017/01/07/xgboost实战/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型Boosted tree来做点击率预估的公式推导&amp;emsp;&amp;emsp;&amp;emsp;首先来定义树模型，假设第i行输入特征为$x_{i}$，第$k$颗树为$f_k$，那树模型的输出就可以写成：
-$\hat{y}{i}=\sum{k=1}^Kf{k}(x{i})$&amp;emsp;&amp;emsp;&amp;emsp;目标损失函数就可以写成">
+<meta property="og:description" content="Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型Boosted tree来做点击率预估的公式推导  ReLu$f(x) = \text{max}(Wx + b)$&amp;emsp;&amp;emsp;&amp;emsp;首先来定义树模型，假设第i行输入特征为$x_{i}$，第$k$颗树为$fk$，那树模型的输出就可以写成：$\sigma^2{\beta}$
+$\hat{y}{i}=\s">
 <meta property="og:image" content="https://github.com/JohnnyGambler/MarkdownPhoto/blob/master/1.PNG">
-<meta property="og:updated_time" content="2017-01-07T06:51:07.000Z">
+<meta property="og:updated_time" content="2017-01-07T06:59:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型Boosted tree来做点击率预估的公式推导&amp;emsp;&amp;emsp;&amp;emsp;首先来定义树模型，假设第i行输入特征为$x_{i}$，第$k$颗树为$f_k$，那树模型的输出就可以写成：
-$\hat{y}{i}=\sum{k=1}^Kf{k}(x{i})$&amp;emsp;&amp;emsp;&amp;emsp;目标损失函数就可以写成">
+<meta name="twitter:description" content="Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型Boosted tree来做点击率预估的公式推导  ReLu$f(x) = \text{max}(Wx + b)$&amp;emsp;&amp;emsp;&amp;emsp;首先来定义树模型，假设第i行输入特征为$x_{i}$，第$k$颗树为$fk$，那树模型的输出就可以写成：$\sigma^2{\beta}$
+$\hat{y}{i}=\s">
 <meta name="twitter:image" content="https://github.com/JohnnyGambler/MarkdownPhoto/blob/master/1.PNG">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -80,7 +80,7 @@ $\hat{y}{i}=\sum{k=1}^Kf{k}(x{i})$&amp;emsp;&amp;emsp;&amp;emsp;目标损失函�
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Multi-GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型"><a href="#Multi-GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型" class="headerlink" title="Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型"></a>Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型</h1><h3 id="Boosted-tree来做点击率预估的公式推导"><a href="#Boosted-tree来做点击率预估的公式推导" class="headerlink" title="Boosted tree来做点击率预估的公式推导"></a>Boosted tree来做点击率预估的公式推导</h3><p>&emsp;&emsp;&emsp;首先来定义树模型，假设第i行输入特征为$x_{i}$，第$k$颗树为$f_k$，那树模型的输出就可以写成：</p>
+        <h1 id="Multi-GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型"><a href="#Multi-GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型" class="headerlink" title="Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型"></a>Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型</h1><h3 id="Boosted-tree来做点击率预估的公式推导-ReLu-f-x-text-max-Wx-b"><a href="#Boosted-tree来做点击率预估的公式推导-ReLu-f-x-text-max-Wx-b" class="headerlink" title="Boosted tree来做点击率预估的公式推导  ReLu$f(x) = \text{max}(Wx + b)$"></a>Boosted tree来做点击率预估的公式推导  ReLu$f(x) = \text{max}(Wx + b)$</h3><p>&emsp;&emsp;&emsp;首先来定义树模型，假设第i行输入特征为$x_{i}$，第$k$颗树为$f<em>k$，那树模型的输出就可以写成：$\sigma^2</em>{\beta}$</p>
 <center>$\hat{y}<em>{i}=\sum</em>{k=1}^Kf<em>{k}(x</em>{i})$</center><br>&emsp;&emsp;&emsp;目标损失函数就可以写成如下形式，一个误差函数，加上一个正则化项：<br><center>$Obj(\Theta)=\sum_i^nl(y_i,\hat{y}<em>i)+\sum</em>{k=1}^K\Omega(f_k)$</center>
 
 <p>&emsp;&emsp;&emsp;那如何来训练树模型来最小化这个目标函数呢？XGBoost使用方法为additive training，核心思路就是，每次加入一颗树，使得目标函数最小。于是我们的目标函数可以改写成：  </p>
@@ -93,7 +93,7 @@ $\hat{y}{i}=\sum{k=1}^Kf{k}(x{i})$&amp;emsp;&amp;emsp;&amp;emsp;目标损失函�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/01/07/xgboost实战/" data-id="cixmvgqhw0001arn1fsolkix3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/01/07/xgboost实战/" data-id="cixmvs4yj0001bfn12l69ey8d" class="article-share-link">Share</a>
       
       
     </footer>
