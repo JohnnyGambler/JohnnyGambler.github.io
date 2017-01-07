@@ -64,7 +64,7 @@
     <article id="post-xgboost实战" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/01/07/xgboost实战/" class="article-date">
-  <time datetime="2017-01-07T07:32:33.000Z" itemprop="datePublished">2017-01-07</time>
+  <time datetime="2017-01-07T07:33:35.000Z" itemprop="datePublished">2017-01-07</time>
 </a>
     
   </div>
@@ -74,7 +74,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="Multi-GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型"><a href="#Multi-GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型" class="headerlink" title="Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型"></a>Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型</h1><h3 id="Boosted-tree来做点击率预估的公式推导"><a href="#Boosted-tree来做点击率预估的公式推导" class="headerlink" title="Boosted tree来做点击率预估的公式推导"></a>Boosted tree来做点击率预估的公式推导</h3><p>&emsp;&emsp;&emsp;首先来定义树模型，假设第i行输入特征为$x_i$，第$k$颗树为$f_k$，那树模型的输出就可以写成:</p>
-<center>$\hat{y}_i=\sum_{k=1}^{K}f\<em>{k}(x\</em>{i})$</center><br>&emsp;&emsp;&emsp;目标损失函数就可以写成如下形式，一个误差函数，加上一个正则化项：<br><center>$Obj(\Theta)=\sum_i^nl(y_i,\hat{y}_i)+\sum_{k=1}^K\Omega(f_k)$</center>
+<center>$\hat{y}_i=\sum_{k=1}^{K}f_{k}(x_{i})$</center><br>&emsp;&emsp;&emsp;目标损失函数就可以写成如下形式，一个误差函数，加上一个正则化项：<br><center>$Obj(\Theta)=\sum_i^nl(y_i,\hat{y}_i)+\sum_{k=1}^K\Omega(f_k)$</center>
 
 <p>&emsp;&emsp;&emsp;那如何来训练树模型来最小化这个目标函数呢？XGBoost使用方法为additive training，核心思路就是，每次加入一颗树，使得目标函数最小。于是我们的目标函数可以改写成：  </p>
 <center>$Obj^t=\sum_i^nl(y_i,\hat{y}_i^t)+\sum_{i=1}^t\Omega(f_i)=\sum_i^nl(y_i,\hat{y}_i^{(t-1)}+f_t(x_i))+\Omega(f_t)+cons$</center><br> &emsp;&emsp;&emsp;将这个式子再通过泰勒展开得到：<br><center>$Obj^t\simeq\sum_{i=1}^n[g_if_t(x_i)+\frac{1}{2}h_if_t^2(x_i)]+\Omega(f_t)$</center><br> &emsp;&emsp;&emsp;其中$g_i=\partial_{\hat{y_i}^{(t-1)}}l(y_i,\hat{y}_i^{(t-1)}),h_i=\partial_{\hat{y_i}^{(t-1)}}^2l(y_i,\hat{y}_i^{(t-1)})$。$g_i$就是指目标值和估计值之间的误差在$\hat{y_i}^{(t-1)}$这个点的一阶导数，$h_i$就是二阶导数。<br><br>&emsp;&emsp;&emsp;接下来，对树模型的定义做下细化，将树拆分成结构部分$q$和叶子的权重部分$w$。即$q$就是树节点的那些规则，$w$就是特征通过树规则后得到的叶子节点权值。<br><center>$f_t(x)=w_q(x)$</center><br>&emsp;&emsp;&emsp;目标函数的正则化项可以写成：<br><center>$\Omega(f_t)=\gamma T+\frac{1}{2}\lambda\sum_{j=1}^Tw_j^2$  </center><br>&emsp;&emsp;&emsp;&emsp;定义$I_j={i|q(x_i)=j}$,$I_j$为所有通过树的规则，进入叶子$j$的集合。<br>&emsp;&emsp;&emsp;&emsp;再定义$G_j=\sum_{i\in I_j}g_i   , H_j=\sum_{i\in I_j}h_i$。我们改写目标函数为：<br><center>$Obj^t\simeq\sum_{i=1}^n[g_if_t(x_i)+\frac{1}{2}h_if_t^2(x_i)]+\Omega(f_t)$</center><br><center>$=\sum_{i=1}^n[g_if_t(x_i)+\frac{1}{2}h_if_t^2(x_i)]+\gamma T+\frac{1}{2}\lambda\sum_{j=1}^Tw_j^2$</center>  
@@ -86,113 +86,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/01/07/xgboost实战/" data-id="cixmwy37a0001ean18ueg9mox" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-test" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/01/07/test/" class="article-date">
-  <time datetime="2017-01-07T06:59:56.000Z" itemprop="datePublished">2017-01-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Multi-GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型"><a href="#Multi-GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型" class="headerlink" title="Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型"></a>Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型</h1><hr>
-<p>ReLu$f(x) = \text{max}(Wx + b)$</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/01/07/test/" data-id="cixmwy3740000ean1lebzx4nu" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-浅谈Batch Normalization及其Caffe实现" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/01/07/浅谈Batch Normalization及其Caffe实现/" class="article-date">
-  <time datetime="2017-01-07T06:26:41.000Z" itemprop="datePublished">2017-01-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="浅谈Batch-Normalization及其Caffe实现"><a href="#浅谈Batch-Normalization及其Caffe实现" class="headerlink" title="浅谈Batch Normalization及其Caffe实现"></a>浅谈Batch Normalization及其Caffe实现</h1><p>标签（空格分隔）： 未分类</p>
-<hr>
-<h4 id="摘要"><a href="#摘要" class="headerlink" title="摘要:"></a>摘要:</h4><p>2015年2月份，Google和MSRA的paper相继在<a href="https://arxiv.org/" target="_blank" rel="external">arxiv.org</a>上横空出世，宣布在ImagenNet图像数据集上取得了比人类更高的识别能力. 此突破意义重大，文章发布后引起一片热潮，在图像领域具有普适的应用.<br>本文中笔者仅就Google的Batch Normalization谈谈粗浅的理解.     </p>
-<p>####1. Motivation<br>1.1 internal convariate shit<br>传统的浅层学习模型，如单层的logistic regression, SVMs以及2层结构的FMs等模型，每次更新参数均从稳定的训练数据上拟合. 深度学习因其多层结构，浅层输出作为下一层输入.除了梯度消失问题外，在学习过程中，每层网络的参数不断更新，导致下一层输入的分布不断变化. 因而无法跟浅层模型一样，每次都在稳定的数据上学习参数. 除了降低学习率外，还要初始化一组良好的参数，调得一手好参.<br>1.2 为什么要初始化一组良好的参数<br>学习过<a href="http://deeplearning.stanford.edu/tutorial/" target="_blank" rel="external">UFLDL</a>或者做过图像实验的同学会发现对数据进行预处理，例如PCA Whitening或者简单的z-score都是可以加速收敛的.<br>首先图像数据是局部高度相关的，并且个维度上的数据取值在[0,255]之间. 简化到2维，图像数据仅会落到第一象限，如下图:<br><img src="http://static.zybuluo.com/ivertime/avy469fn32mzi4zkek5yayj4/5A75AEEF-2336-44A1-B7B2-8A9EC5155397.jpg" alt="5A75AEEF-2336-44A1-B7B2-8A9EC5155397.jpg-25.6kB"><br>图片来自happynear的博客<sup><a href="http://blog.csdn.net/happynear/article/details/44238541" target="_blank" rel="external">2</a></sup><br>假设激活函数为ReLu$f(x) = \text{max}(Wx + b)$, 如果不通过精心设计或者fine-tune，而随机初始化$W$, 学习的前期阶段很可能是图中的绿色虚线，需要经过长时间的迭代才能收敛到紫色虚线，得到一个好的拟合结果。<br>如果对数据做预处理，例如z-score/PCA whitening等线性变化，映射到0均值单位方差的平移后空间里，那么收敛效果会有显著提升。因为减去均值后，数据能分散到各个象限；更进一步的，对数据做去相关操作，提高收敛效率.<br>1.3 为什么做的是线性变换而不能做非线性变换呢？<br>Batch Normalization是数据层面的改进，要保留数据的原貌，即保留特征的非线性关系.</p>
-<h4 id="2-Normalization-via-Mini-Batch-Statistics"><a href="#2-Normalization-via-Mini-Batch-Statistics" class="headerlink" title="2. Normalization via Mini-Batch Statistics"></a>2. Normalization via Mini-Batch Statistics</h4><p><img src="http://static.zybuluo.com/ivertime/2a1559dvepalq805da0kv6ez/image_1b2foqvk2s3dnliura7cp1bthm.png" alt="image_1b2foqvk2s3dnliura7cp1bthm.png-209kB"><br>前向反馈时，在每个Batch中，从特征维度上计算出mini-batch和mini-batch variance之后完成normalization.<br>理想情况下，均值和方差应该是在整个数据集上计算的，然而不能穿越得到unseen  data，因此，退而求其次，用Batch中统计的均值和方差作为整个数据集的估计.<br>完成normalization之后算法似乎该结束了，但是如果把特征都normalize到$\cal{N}(0,1)$，那么因为特征只在激活函数上线性区域上激活，会降低特征的表达能力. 如下图虚线和Sigmoid曲线的重叠的部分.<br><img src="http://static.zybuluo.com/ivertime/k60gmyaaetjzrrgdq2e1dvdl/linear" alt="linear-16.1kB"><br>容易混淆的是，Hinton老爷子曾在公开课Neural Networks for Machine Learning<sup><a href="https://www.coursera.org/learn/neural-networks" target="_blank" rel="external">3</a></sup>里提到神经网络的weight应该初始化在$\cal{N}(0,1)$附近，防止梯度消失.<br><img src="http://static.zybuluo.com/ivertime/ie8ddkhxb5436k4pqf8keuqh/1-gkXI7LYwyGPLU5dn6Jb6Bg.png" alt="1-gkXI7LYwyGPLU5dn6Jb6Bg.png-51.5kB">  </p>
-<p>但是，如果使用PReLU或者ELU等激活函数，是不会有这个问题的!</p>
-<p>针对上述问题，在算法结束之前，作者对normalization之后的数据$\hat{x<em>i}$设置了两个参数$\gamma$和$\beta$. 很显然如果$\gamma=\sqrt{\sigma^2</em>{\beta}}$,$\beta=\mu_{\beta}$，那么对$x_i$ scale<br> and shift之后的$y_i$就还原成$x_i$了. 至于是否需要对$y_i$进行还原，由构建好的模型自动从训练数据中学习决定， learning from data.     </p>
-<p>反向传播时，SGD也在Batch中计算，梯度公式很简单，请大家停下10分钟，在白纸上推导一遍，保证清楚理解链式法则计算梯度的思路. 这很重要，因为目前所有的学习算法都是基于链式法则的反向传播.<br><img src="http://static.zybuluo.com/ivertime/laq0fr1br97q07qry0k2q2lo/image_1b2fpiu34ep7iljocuejh7b813.png" alt="image_1b2fpiu34ep7iljocuejh7b813.png-35.4kB"></p>
-<h4 id="3-Implementation-in-Caffe"><a href="#3-Implementation-in-Caffe" class="headerlink" title="3. Implementation in Caffe"></a>3. Implementation in Caffe</h4><p>笔者接下来介绍Batch Normalization在Caffe中的实现.   </p>
-<p>实际应用中，$\mu<em>{\beta}$和$\sigma^2</em>{\beta}$通常是在训练集上计算，测试的时候直接使用训练时计算得到的值. 此外，Batch Normalization Layer的backward pass实际并没有被调用，因此笔者仅分析forward pass部分的代码.    </p>
-<p>首先Batch Normalization在proto中默认参数配置如下: </p>
-<pre><code>message BatchNormParameter {
-    // If false, accumulate global mean/variance values via a moving average. If
-    // true, use those accumulated values instead of computing mean/variance
-    // across the batch.
-    optional bool use_global_stats = 1;
-    // How much does the moving average decay each iteration?
-    optional float moving_average_fraction = 2 [default = .999];
-    // Small value to add to the variance estimate so that we don&apos;t divide by
-    // zero.
-    optional float eps = 3 [default = 1e-5];
-}
-</code></pre><p>因为一些历史原因(可能是scale and shift只对使用sigmoid作为激活函数有效), Caffe的normalize step 和scale and shift step至今不在同一个layer中实现, 导致很多人在使用的时候经常出现不知道该怎么用或者这么用对不对的问题. 笔者建议参考ResNet<sup><a href="https://github.com/KaimingHe/deep-residual-networks/blob/master/prototxt/ResNet-152-deploy.prototxt" target="_blank" rel="external">4</a></sup>，并建议在BatchNorm中不显示配置batch_norm_param，而是有代码运行时自动判断是否use_global_stats，此外不建议做scale and shift step，因为sigmoid function效果通常是很差的，导致更多的是一开始就选择PReLu等激活函数:    </p>
-<pre><code>layer {
-    bottom: &quot;conv1&quot;
-    top: &quot;conv1&quot;
-    name: &quot;bn_conv1&quot;
-    type: &quot;BatchNorm&quot;
-    // 不建议配置batch_norm_param. 
-    batch_norm_param {
-        use_global_stats: true
-    }
-} 
-
-layer {
-    bottom: &quot;conv1&quot;
-    top: &quot;conv1&quot;
-    name: &quot;scale_conv1&quot;
-    type: &quot;Scale&quot;
-    scale_param {
-        bias_term: true
-    }
-}
-</code></pre><p>详细代码走读参见笔者的<a href="https://github.com/irwenqiang/caffe/blob/master/src/caffe/layers/batch_norm_layer.cpp" target="_blank" rel="external">github</a>.   </p>
-<h4 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h4><p>本文首先解释了Batch Normalization的motivation以及该方法为什么work. 接着对算法内容进行详解，给出并建议读者朋友们动手在白纸上推导反向传播计算$\mu<em>{\beta}$和$\sigma^2</em>{\beta}$的梯度公式. 最后在github上提供了一份Caffe的bn代码走读.       </p>
-<p>欢迎并鼓励对本文和github上代码走读有不同见解的朋友们留言或者联系本站站长! </p>
-<h4 id="5-参考文献"><a href="#5-参考文献" class="headerlink" title="5. 参考文献"></a>5. 参考文献</h4><ol>
-<li><a href="https://arxiv.org/abs/1502.03167" target="_blank" rel="external">Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift</a>     </li>
-<li><a href="http://blog.csdn.net/happynear/article/details/44238541" target="_blank" rel="external">《Batch Normalization Accelerating Deep Network Training by Reducing Internal Covariate Shift》阅读笔记与实现</a>   </li>
-<li><a href="https://www.coursera.org/learn/neural-networks" target="_blank" rel="external">Neural Networks for Machine Learning</a>  </li>
-<li><a href="https://github.com/KaimingHe/deep-residual-networks/blob/master/prototxt/ResNet-152-deploy.prototxt" target="_blank" rel="external">ResNet-152-deploy</a>   </li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/01/07/浅谈Batch Normalization及其Caffe实现/" data-id="cixmwy37c0002ean1hm2oso1l" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/01/07/xgboost实战/" data-id="cixncmeq50001ycn1d0n0796t" class="article-share-link">Share</a>
       
       
     </footer>
@@ -233,14 +127,6 @@ layer {
         
           <li>
             <a href="/2017/01/07/xgboost实战/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2017/01/07/test/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2017/01/07/浅谈Batch Normalization及其Caffe实现/">(no title)</a>
           </li>
         
       </ul>
