@@ -84,23 +84,27 @@
 
 
 
-<meta name="description" content="&amp;emsp;&amp;emsp;手牌是: ivey  99。kirk TQ 。魔术师拿到JJ。&amp;emsp;&amp;emsp;翻牌22Q。ivey拿着对9，下注5000刀，Kirk跟了。魔术师觉得有2个人都跟了，这种牌面很危险，想试探下对手的牌力，raise到17000。ivey秒call，kirk想装自己有2，再raise到45000，魔术师跟了。ivey弃牌，这种牌面，一对9弃牌很漂亮。&amp;emsp;&amp;emsp">
+<meta name="description" content="笔记：FNN做点击率预估中的实现思路&amp;emsp;&amp;emsp;DNN这边一群大牛做了好几年了，已经有很深的技术积累。15年末到16年初当时做的multi GBDT ＋LR，想法上个人觉得已经很好，和业务的结合也反复在调试，最后还是在ctr＋ecpm上被DNN甩开了很大距离。&amp;emsp;&amp;emsp;我们这边有个专家工程师说过：目前点击率预估已是国内第一阵营，除非再出现如深度学习这种大的变革，剩下的就是">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Aria超级豪客赛  魔术师展示超一流思维">
-<meta property="og:url" content="http://yoursite.com/2017/01/08/Aria超级豪客赛   魔术师超一流思维/index.html">
+<meta property="og:title" content="笔记：FNN做点击率预估中的实现思路">
+<meta property="og:url" content="http://yoursite.com/2017/01/15/FNN/index.html">
 <meta property="og:site_name" content="Johnny's Blog">
-<meta property="og:description" content="&amp;emsp;&amp;emsp;手牌是: ivey  99。kirk TQ 。魔术师拿到JJ。&amp;emsp;&amp;emsp;翻牌22Q。ivey拿着对9，下注5000刀，Kirk跟了。魔术师觉得有2个人都跟了，这种牌面很危险，想试探下对手的牌力，raise到17000。ivey秒call，kirk想装自己有2，再raise到45000，魔术师跟了。ivey弃牌，这种牌面，一对9弃牌很漂亮。&amp;emsp;&amp;emsp">
-<meta property="og:image" content="https://raw.githubusercontent.com/JohnnyGambler/pokerPhoto/master/2017-01-08%20000935.jpg">
-<meta property="og:image" content="https://raw.githubusercontent.com/JohnnyGambler/pokerPhoto/master/2017-01-08%20000939.jpg">
-<meta property="og:image" content="https://raw.githubusercontent.com/JohnnyGambler/pokerPhoto/master/2017-01-08%20000942.jpg">
-<meta property="og:image" content="https://raw.githubusercontent.com/JohnnyGambler/pokerPhoto/master/2017-01-08%20000944.jpg">
-<meta property="og:image" content="https://raw.githubusercontent.com/JohnnyGambler/pokerPhoto/master/2017-01-08%20000946.jpg">
-<meta property="og:image" content="https://raw.githubusercontent.com/JohnnyGambler/pokerPhoto/master/2017-01-08%20000949.jpg">
-<meta property="og:updated_time" content="2017-01-07T16:37:37.000Z">
+<meta property="og:description" content="笔记：FNN做点击率预估中的实现思路&amp;emsp;&amp;emsp;DNN这边一群大牛做了好几年了，已经有很深的技术积累。15年末到16年初当时做的multi GBDT ＋LR，想法上个人觉得已经很好，和业务的结合也反复在调试，最后还是在ctr＋ecpm上被DNN甩开了很大距离。&amp;emsp;&amp;emsp;我们这边有个专家工程师说过：目前点击率预估已是国内第一阵营，除非再出现如深度学习这种大的变革，剩下的就是">
+<meta property="og:image" content="https://raw.githubusercontent.com/JohnnyGambler/MarkdownPhoto/master/dnn-1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JohnnyGambler/MarkdownPhoto/master/dnn-2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JohnnyGambler/MarkdownPhoto/master/dnn-3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JohnnyGambler/MarkdownPhoto/master/dnn-4.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JohnnyGambler/MarkdownPhoto/master/dnn-5.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JohnnyGambler/MarkdownPhoto/master/dnn-6.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JohnnyGambler/MarkdownPhoto/master/dnn-8.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JohnnyGambler/MarkdownPhoto/master/dnn-9.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JohnnyGambler/MarkdownPhoto/master/fm-1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JohnnyGambler/MarkdownPhoto/master/dnn-10.PNG">
+<meta property="og:updated_time" content="2017-01-15T14:26:08.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Aria超级豪客赛  魔术师展示超一流思维">
-<meta name="twitter:description" content="&amp;emsp;&amp;emsp;手牌是: ivey  99。kirk TQ 。魔术师拿到JJ。&amp;emsp;&amp;emsp;翻牌22Q。ivey拿着对9，下注5000刀，Kirk跟了。魔术师觉得有2个人都跟了，这种牌面很危险，想试探下对手的牌力，raise到17000。ivey秒call，kirk想装自己有2，再raise到45000，魔术师跟了。ivey弃牌，这种牌面，一对9弃牌很漂亮。&amp;emsp;&amp;emsp">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/JohnnyGambler/pokerPhoto/master/2017-01-08%20000935.jpg">
+<meta name="twitter:title" content="笔记：FNN做点击率预估中的实现思路">
+<meta name="twitter:description" content="笔记：FNN做点击率预估中的实现思路&amp;emsp;&amp;emsp;DNN这边一群大牛做了好几年了，已经有很深的技术积累。15年末到16年初当时做的multi GBDT ＋LR，想法上个人觉得已经很好，和业务的结合也反复在调试，最后还是在ctr＋ecpm上被DNN甩开了很大距离。&amp;emsp;&amp;emsp;我们这边有个专家工程师说过：目前点击率预估已是国内第一阵营，除非再出现如深度学习这种大的变革，剩下的就是">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/JohnnyGambler/MarkdownPhoto/master/dnn-1.png">
 
 
 
@@ -128,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/01/08/Aria超级豪客赛   魔术师超一流思维/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/01/15/FNN/"/>
 
 
 
 
 
-  <title> Aria超级豪客赛  魔术师展示超一流思维 | Johnny's Blog </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> 笔记：FNN做点击率预估中的实现思路 | Johnny's Blog </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -267,7 +271,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/08/Aria超级豪客赛   魔术师超一流思维/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/15/FNN/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Johnny">
@@ -291,7 +295,7 @@
             
             
               
-                Aria超级豪客赛  魔术师展示超一流思维
+                笔记：FNN做点击率预估中的实现思路
               
             
           </h1>
@@ -306,8 +310,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-08T00:37:37+08:00">
-                2017-01-08
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-15T22:26:08+08:00">
+                2017-01-15
               </time>
             
 
@@ -329,8 +333,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/德州扑克/" itemprop="url" rel="index">
-                    <span itemprop="name">德州扑克</span>
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
                   </a>
                 </span>
 
@@ -364,7 +368,11 @@
       
 
       
-        <p>&emsp;&emsp;手牌是: ivey  99。kirk TQ 。魔术师拿到JJ。<br><img src="https://raw.githubusercontent.com/JohnnyGambler/pokerPhoto/master/2017-01-08%20000935.jpg" alt=""><br>&emsp;&emsp;翻牌22Q。ivey拿着对9，下注5000刀，Kirk跟了。魔术师觉得有2个人都跟了，这种牌面很危险，想试探下对手的牌力，raise到17000。ivey秒call，kirk想装自己有2，再raise到45000，魔术师跟了。ivey弃牌，这种牌面，一对9弃牌很漂亮。<br><img src="https://raw.githubusercontent.com/JohnnyGambler/pokerPhoto/master/2017-01-08%20000939.jpg" alt=""><br><img src="https://raw.githubusercontent.com/JohnnyGambler/pokerPhoto/master/2017-01-08%20000942.jpg" alt=""><br><img src="https://raw.githubusercontent.com/JohnnyGambler/pokerPhoto/master/2017-01-08%20000944.jpg" alt=""><br>&emsp;&emsp;转牌，无关牌6，kirk接着bluff，下注5万。魔术师再跟。<br><img src="https://raw.githubusercontent.com/JohnnyGambler/pokerPhoto/master/2017-01-08%20000946.jpg" alt=""><br>&emsp;&emsp;河牌，又发一张8。kirk这个故事要讲好，只能接着bluff，下注10万。<br><img src="https://raw.githubusercontent.com/JohnnyGambler/pokerPhoto/master/2017-01-08%20000949.jpg" alt=""><br>&emsp;&emsp;接下来，是最精彩的部分。作为超一流的牌手，以下是魔术手师在牌桌上现场的分析：kirk这种打法，除了空气牌以外，要么就是有2，所以，翻牌加注，转牌再打，但是，我一直跟，很明显我可能手上有个8，或者也有2，在河牌发出来后，kirk有2的话，绝对不应该打。所以，他没有2。<br>&emsp;&emsp;第二种可能，是对8，如果只有一张8，转牌不会再下注。但是ivey，应该手上有个8，因为ivey在翻牌跟了一轮。<br>&emsp;&emsp;所以，他kirk很有可能手上就是空气，纯bluff，然后魔术师就跟了10万，赢下了42万刀的pot。<br>&emsp;&emsp;这就是超一流选手的胆量啊！</p>
+        <h1 id="笔记：FNN做点击率预估中的实现思路"><a href="#笔记：FNN做点击率预估中的实现思路" class="headerlink" title="笔记：FNN做点击率预估中的实现思路"></a>笔记：FNN做点击率预估中的实现思路</h1><p>&emsp;&emsp;DNN这边一群大牛做了好几年了，已经有很深的技术积累。15年末到16年初当时做的multi GBDT ＋LR，想法上个人觉得已经很好，和业务的结合也反复在调试，最后还是在ctr＋ecpm上被DNN甩开了很大距离。<br>&emsp;&emsp;我们这边有个专家工程师说过：目前点击率预估已是国内第一阵营，除非再出现如深度学习这种大的变革，剩下的就是精调网络结构了。所以你得认可一点： DNN网络结构之间的差异很大，有很大的精调空间。<br>&emsp;&emsp;本文就是DNN和FM的一种结合尝试，又称为FNN，由于业务的保密程度很高，所以本文只是记录FNN其中的一种结构，这并不是我们最终采用的结构。<br>&emsp;&emsp;由于业务场景的限制，例如线上的预估时间，原始的DNN并不一定能将特征的cross发挥到最佳，所以可以在特征输入层后的embedding层将内积改为FM。增加特征之间的cross。</p>
+<h3 id="1-神经网络基本原理"><a href="#1-神经网络基本原理" class="headerlink" title="1. 神经网络基本原理"></a>1. 神经网络基本原理</h3><p>&emsp;&emsp;我们先定义神经网络如下图：<br><img src="https://raw.githubusercontent.com/JohnnyGambler/MarkdownPhoto/master/dnn-1.png" alt=""><br>&emsp;&emsp;定义参数：<br><img src="https://raw.githubusercontent.com/JohnnyGambler/MarkdownPhoto/master/dnn-2.png" alt=""><br>有：<br>  <img src="https://raw.githubusercontent.com/JohnnyGambler/MarkdownPhoto/master/dnn-3.png" alt=""><br>&emsp;&emsp;定义损失函数，一个误差函数加上一个正则化：<br><img src="https://raw.githubusercontent.com/JohnnyGambler/MarkdownPhoto/master/dnn-4.png" alt=""><br>&emsp;&emsp;利用随机梯度下降来求解参数：<br><img src="https://raw.githubusercontent.com/JohnnyGambler/MarkdownPhoto/master/dnn-5.png" alt=""><br>&emsp;&emsp;但是$\frac{\partial J(W,b)}{\partial W}$不好算，做下变形：<br><img src="https://raw.githubusercontent.com/JohnnyGambler/MarkdownPhoto/master/dnn-6.png" alt=""><br>&emsp;&emsp;并定义误差项：  </p>
+<p><center>$\sigma^{(l)}=\frac{\partial J(W,b)}{\partial z}$</center><br>&emsp;&emsp;然后就能得到方向传播的公式：<br><img src="https://raw.githubusercontent.com/JohnnyGambler/MarkdownPhoto/master/dnn-8.png" alt=""><br>&emsp;&emsp;用一句话来表述这个公式：<br>&emsp;&emsp;$l$层的误差项等于与之相连的$l+1$层神经元上的误差项乘以连接的权值加和，然后再乘上激活函数的梯度。<br>&emsp;&emsp;这里可以顺便解释下，DNN里面的梯度消失问题。如果激活函数采用sigmoid，那这个激活函数的梯度会小于1，这样不断的往上一层传递的过程中误差项会越来越小，直至SGD无法对参数进行有效的优化。<br>&emsp;&emsp;于是，得到反向传播来估计参数的伪代码。（批量梯度下降版本）<br><img src="https://raw.githubusercontent.com/JohnnyGambler/MarkdownPhoto/master/dnn-9.png" alt="">  </p>
+<h3 id="2-FNN实现思路"><a href="#2-FNN实现思路" class="headerlink" title="2.FNN实现思路"></a>2.FNN实现思路</h3><p>&emsp;&emsp;FNN的变种有很多，这里说一个我们试验过的方法，并未达到最好的效果。由于业务保密程度很高，网络结构是核心技术，所以达到好效果的方法不能说。。。<br>&emsp;&emsp;把最后一层的神经元计算方式，从内积变成FM。FM的公式如下：  </p>
+<p><center>$\hat{y}=\sum_{i=0}^Nw_ix_i+\sum_{i=1}^N\sum_{j=i+1}^N<v\_i,v\_j>x_ix_j$</v\_i,v\_j></center><br>根据前面的公式，这里参数的优化，主要是计算$\frac{\partial z}{\partial w}$，即:<br><img src="https://raw.githubusercontent.com/JohnnyGambler/MarkdownPhoto/master/fm-1.png" alt=""><br>直接把这部分放到sgd优化参数的那部分就行了。这一层是不用加relu的，所以激活函数的梯度是直接设为1的。把这层的实现加到caffe里面，就能实现FNN了。<br><img src="https://raw.githubusercontent.com/JohnnyGambler/MarkdownPhoto/master/dnn-10.PNG" alt=""></p>
 
       
     </div>
@@ -391,15 +399,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/01/08/xgboost实战/" rel="next" title="Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型">
+                <i class="fa fa-chevron-left"></i> Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/08/xgboost实战/" rel="prev" title="Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型">
-                Multi GBDT点击率预估实战：修改XGBoost，并行训练数千个GBDT模型 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -446,8 +454,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -496,6 +513,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#笔记：FNN做点击率预估中的实现思路"><span class="nav-number">1.</span> <span class="nav-text">笔记：FNN做点击率预估中的实现思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-神经网络基本原理"><span class="nav-number">1.0.1.</span> <span class="nav-text">1. 神经网络基本原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-FNN实现思路"><span class="nav-number">1.0.2.</span> <span class="nav-text">2.FNN实现思路</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
